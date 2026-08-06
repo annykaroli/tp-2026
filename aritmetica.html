@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        input {
+            width: 120px;
+            padding: 8px;
+            margin: 5px;
+        }
+
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        #resultado {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Calculadora</h2>
+
+    <input type="number" id="num1" placeholder="Primeiro número">
+    <input type="number" id="num2" placeholder="Segundo número">
+
+    <br><br>
+
+    <button onclick="somar()">+</button>
+    <button onclick="subtrair()">-</button>
+    <button onclick="multiplicar()">*</button>
+    <button onclick="dividir()">/</button>
+    <button onclick="limpar()">Limpar</button>
+
+    <div id="resultado">Aguardando valores...</div>
+
+    <script>
+
+        function pegarValores() {
+            let n1 = Number(document.getElementById("num1").value);
+            let n2 = Number(document.getElementById("num2").value);
+
+            return [n1, n2];
+        }
+
+        function somar() {
+            let valores = pegarValores();
+            let resultado = valores[0] + valores[1];
+
+            document.getElementById("resultado").innerHTML = "Resultado: " + resultado;
+        }
+
+        function subtrair() {
+            let valores = pegarValores();
+            let resultado = valores[0] - valores[1];
+
+            document.getElementById("resultado").innerHTML = "Resultado: " + resultado;
+        }
+
+        function multiplicar() {
+            let valores = pegarValores();
+            let resultado = valores[0] * valores[1];
+
+            document.getElementById("resultado").innerHTML = "Resultado: " + resultado;
+        }
+
+        function dividir() {
+            let valores = pegarValores();
+
+            if (valores[1] == 0) {
+                document.getElementById("resultado").innerHTML = "Não é possível dividir por zero!";
+            } else {
+                let resultado = valores[0] / valores[1];
+                document.getElementById("resultado").innerHTML = "Resultado: " + resultado;
+            }
+        }
+
+        function limpar() {
+            document.getElementById("num1").value = "";
+            document.getElementById("num2").value = "";
+            document.getElementById("resultado").innerHTML = "Aguardando valores...";
+        }
+
+    </script>
+
+</body>
+</html>
