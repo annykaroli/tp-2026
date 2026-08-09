@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rendimento da Aplicação</title>
+    <script>
+        function calcularRendimento() {
+            let saldo = Number(document.getElementById("saldo").value)
+            let taxa = Number(document.getElementById("taxa").value)
+            let meses = Number(document.getElementById("meses").value)
+            if (saldo <= 0 || taxa <= 0 || meses <= 0) {
+                document.getElementById("resultado").innerHTML =
+                    "Digite valores maiores que zero."
+                return
+            }
+            let texto = ""
+            for (let mes = 1; mes <= meses; mes++) {
+                let rendimento = saldo * (taxa / 100)
+                saldo = saldo + rendimento
+                texto += "No " + mes + "º mês a aplicação rendeu R$ "
+                texto += rendimento.toFixed(2)
+                texto += " e o total aplicado passou a ser R$ "
+                texto += saldo.toFixed(2)
+                texto += "<br>"
+            }
+            texto += "<br>O saldo final da aplicação será de R$ "
+            texto += saldo.toFixed(2)
+            document.getElementById("resultado").innerHTML = texto
+        }
+    </script>
+</head>
+<body>
+    <h2>Calculadora de Rendimento</h2>
+    <form>
+        <input type="number" id="saldo" placeholder="Saldo"><br>
+        <input type="number" id="taxa" placeholder="Taxa de rendimento (%)"><br>
+        <input type="number" id="meses" placeholder="Quantidade de meses"><br><br>
+        <button type="button" onclick="calcularRendimento()">
+            Calcular
+        </button>
+    </form>
+    <p id="resultado"></p>
+</body>
+</html>
