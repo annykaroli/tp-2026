@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <script>
+        let operacao
+        function escolherOperacao(valor) {
+            operacao = valor
+        }
+        function calcular() {
+            let numero1 = Number(document.getElementById("numero1").value)
+            let numero2 = Number(document.getElementById("numero2").value)
+            let resultado
+            if (document.getElementById("numero1").value == "" ||
+                document.getElementById("numero2").value == "") {
+                document.getElementById("resultado").innerHTML =
+                    "Digite os dois números."
+                return
+            }if (operacao == "+") {
+                resultado = numero1 + numero2
+            }if (operacao == "-") {
+                resultado = numero1 - numero2
+            }if (operacao == "*") {
+                resultado = numero1 * numero2
+            }if (operacao == "/") {
+                if (numero2 == 0) {
+                    document.getElementById("resultado").innerHTML =
+                        "Não é possível dividir por zero."
+                    return
+                }
+                resultado = numero1 / numero2
+            }
+            document.getElementById("resultado").innerHTML =
+                "Resultado: " + resultado
+        }
+        function limpar() {
+            document.getElementById("numero1").value = ""
+            document.getElementById("numero2").value = ""
+            document.getElementById("resultado").innerHTML = ""
+        }
+    </script>
+</head>
+<body>
+    <h2>Calculadora</h2>
+    <form>
+        <input type="number" id="numero1" placeholder="Primeiro número">
+        <br>
+        <input type="number" id="numero2" placeholder="Segundo número">
+        <br><br>
+        <button type="button" onclick="escolherOperacao('+')">+</button>
+        <button type="button" onclick="escolherOperacao('-')">-</button>
+        <button type="button" onclick="escolherOperacao('*')">*</button>
+        <button type="button" onclick="escolherOperacao('/')">/</button>
+        <br><br>
+        <button type="button" onclick="calcular()">Calcular</button>
+        <button type="button" onclick="limpar()">Limpar</button>
+
+    </form>
+    <p id="resultado"></p>
+</body>
+</html>
