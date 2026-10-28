@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="htmx-config" content='{"selfRequestsOnly":false}'>
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.7/dist/htmx.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/htmx-ext-json-enc@2.0.1/json-enc.js"></script>
+    <title>Teste HTMX</title>
+</head>
+<body hx-ext="json-enc">
+    <h1>Cadastro de nomes</h1>
+    <form id="formulario"
+          hx-get="https://ola-tp1.onrender.com/existe"
+          hx-trigger="submit"
+          hx-target="#resposta"
+          hx-swap="innerHTML"
+          hx-include="#nome">
+        <input type="text" id="nome" name="nome"
+               placeholder="Digite seu nome" required>
+        <button type="submit">Cadastrar</button>
+    </form>
+    <p id="resposta"></p>
+    <button
+        hx-get="https://ola-tp1.onrender.com/nomes"
+        hx-target="#lista"
+        hx-swap="innerHTML">
+        Listar nomes
+    </button>
+    <ul id="lista"></ul>
+    <script>
+        document.getElementById("formulario").addEventListener("submit", async function(event) {
+            event.preventDefault();
+            const nome = document.getElementById("nome").value.trim();
+            const resposta = document.getElementById("resposta");
+            if (nome === "") {
+                resposta.innerHTML = "Digite um nome.";
+                return;
+            }try {
+                const consulta = await fetch(
+                    "https://ola-tp1.onrender.com/existe?nome=" +
+                    encodeURIComponent(nome)
+                );
+                const existe = await consulta.json();
+                if (existe === true) {
+                    resposta.innerHTML = "Esse nome já está cadastrado.";
+                    return;
+                } const cadastro = await fetch(
+                    "https://ola-tp1.onrender.com/nomes",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ nome: nome })
+                    }
+                );
+                const resultado = await cadastro.text();
+                resposta.innerHTML = "Resposta do servidor: " + resultado;
+            } catch (erro) {
+                resposta.innerHTML =
+                    "Não foi possível acessar o servidor. Tente novamente.";
+            }
+        });
+    </script>
+</body>
+</html>
